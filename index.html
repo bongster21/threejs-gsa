@@ -1,0 +1,155 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/base.css">
+        <link rel="stylesheet" href="styles/layout.css">
+        <link rel="stylesheet" href="styles/skeleton.css">
+        <link rel="stylesheet" href="styles/colorpicker.css">
+        <link rel="stylesheet" href="styles/rzslider.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- endbuild -->
+
+        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+
+</head>
+  <body ng-app="ngWebglDemo">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- application content -->
+    <div class="container" ng-controller="AppCtrl">
+      <div class="eighteen columns add-bottom panel" id="panel">
+          <!-- HEADER -->
+          <div class="sixteen columns add-bottom">
+            <div class="navbar">
+              <h1>Z15</h1>
+              <img src="img/arup.png" style="float:right; height:30px; margin-bottom:20px; margin-top:-50px" />
+            </div>
+            <hr />
+          </div>
+          <!-- END HEADER -->
+
+     
+
+          <div class="twelve columns add-bottom">
+        
+            <div 
+              id="webglContainer" 
+              ng-webgl
+              width="canvasWidth"
+              height="canvasHeight"
+              fillcontainer="dofillcontainer"
+              scale="scale"
+              material-type="materialType"
+              style="text-align:center"
+              obj="obj"
+            ></div>
+
+          </div>
+
+          <div class="four columns add-bottom">
+          
+          <!--
+            <label for="scale">Scale Object</label>
+            <input type="range" name="scale" min="1.0" max="2.0" step="0.1" ng-model="scale" class="add-bottom">
+
+            <label for="dofillcontainer">
+              <input type="checkbox" id="dofillcontainer" ng-model="dofillcontainer"/>
+              <span>Responsive Canvas</span>
+            </label>
+
+            <label for="canvasWidth">Canvas Width</label>
+            <input type="text" id="canvasWidth" ng-model="canvasWidth" ng-disabled="dofillcontainer">
+
+            <label for="canvasHeight">Canvas Height</label>
+            <input type="text" id="canvasHeight" ng-model="canvasHeight" ng-disabled="dofillcontainer">
+            -->
+            <label for="colorpicker" style="margin-bottom:20px;">Contours</label>
+     
+            <a ng-click="addObj()"><i class="fa fa-2x fa-plus-circle" style="margin-bottom:25px;"></i></a><br />
+
+           
+            <div ng-repeat="input in obj">
+                      <input colorpicker type="text" ng-model="input.color" ng-style="{'background-color':input.color, 'color':input.color, 'width':'20px', 'display':'inline'}"/>
+                      <rzslider
+                                rz-slider-floor="input.floor"
+                                rz-slider-ceil="input.ceil"
+                                rz-slider-model="input.min"
+                                rz-slider-high="input.max"
+                                style="width:60%; margin-left: 10px; margin-right: 10px"></rzslider> 
+            
+                     
+                       <a ng-click="removeObj($index)"  ><i ng-class="{false: 'rotate'}[input.isActive]" class="fa fa-minus-circle"></i></a>
+                       <br />
+            </div>
+
+            <!--
+          <input colorpicker type="text" ng-model="color1" ng-style="{'background-color':color1, 'color':color1, 'width':'20px', 'display':'inline'}"/>
+          <rzslider
+                    rz-slider-floor="rangeSlider.floor"
+                    rz-slider-ceil="rangeSlider.ceil"
+                    rz-slider-model="rangeSlider.min"
+                    rz-slider-high="rangeSlider.max"
+                    style="width:60%; margin-left: 10px;"></rzslider> 
+            
+            <br />
+          <input colorpicker type="text" ng-model="color2" ng-style="{'background-color':color2, 'color':color2, 'width':'20px', 'display':'inline'}"/>
+          <rzslider
+                    rz-slider-floor="rangeSlider2.floor"
+                    rz-slider-ceil="rangeSlider2.ceil"
+                    rz-slider-model="rangeSlider2.min"
+                    rz-slider-high="rangeSlider2.max"
+                    style="width:60%; margin-left: 10px;"></rzslider> 
+
+            <br />
+          <input colorpicker type="text" ng-model="color3" ng-style="{'background-color':color3, 'color':color3, 'width':'20px', 'display':'inline'}"/>
+          <rzslider
+                    rz-slider-floor="rangeSlider3.floor"
+                    rz-slider-ceil="rangeSlider3.ceil"
+                    rz-slider-model="rangeSlider3.min"
+                    rz-slider-high="rangeSlider3.max"
+                    style="width:60%; margin-left: 10px;"></rzslider> 
+  
+
+
+          </div>
+          -->
+
+          </div><!-- END PANEL -->
+    </div><!-- END CONTAINER -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"></script>
+
+    <!-- scripts/scripts.js -->
+          <script src="ngWebgl.js"></script>
+      <script src="app.js"></script>
+      <script src="TrackballControls.js"></script>
+      <script src="Detector.js"></script>
+      <script src="bootstrap-colorpicker-module.js"></script>
+      <script src="rzslider.js"></script>
+
+    <!-- endbuild -->
+
+</body>
+</html>
+
